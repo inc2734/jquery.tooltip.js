@@ -1,0 +1,24 @@
+@charset "utf-8";
+.jToolTip_q {
+	display : inline;
+}
+.jToolTip_a {
+	display : none;
+}
+div#jToolTip {
+	border : #ccc solid 1px;
+	background-color : #F7F2F2;
+	color : #000;
+	margin : 0;
+	padding : 10px;
+	opacity : 0.8;
+	filter:alpha( opacity=80 );
+	text-align : left;
+	width : 240px;
+	border-radius : 10px;
+	-moz-border-radius : 10px;
+	-webkit-border-radius : 10px;
+	box-shadow : 1px 1px 3px #ccc;
+	-moz-box-shadow : 1px 1px 3px #ccc;
+	-webkit-box-shadow : 1px 1px 3px #ccc;
+}
