@@ -1,11 +1,11 @@
 /**
 * jquery.toolTip.js
 * Description: ツールチップ（ポップアップヒント）を表示するjQueryプラグイン
-* Version: 1.0
+* Version: 1.1
 * Author: Takashi Kitajima
 * Autho URI: http://2inc.org
 * created: May 13, 2012
-* modified : May 13, 2012
+* modified : May 23, 2012
 * License: GPL2
 *
 * Copyright 2012 Takashi Kitajima (email : inc@2inc.org)
@@ -35,6 +35,7 @@
 		return this.each( function( i, elem ) {
 			// ロールオーバー時
 			$(elem).hover( function( e ) {
+				if ( $(elem).find( '#jToolTip' ).size() > 0 ) return;
 				_title = $(elem).attr( 'title' );
 				if ( !_title ) {
 					title = $(this).find( '.jToolTip_a' ).html();
@@ -47,7 +48,7 @@
 				tooltip = $('<div/>')
 					.attr( 'id', 'jToolTip' )
 					.html( title )
-					.appendTo( 'body' );
+					.appendTo( elem );
 				// ブラウザにかぶるときは位置反転
 				if ( e.pageX + tooltip.width() > getWindowWidth() - 50 ) {
 					posX = e.pageX - tooltip.width() - 30;
@@ -55,18 +56,19 @@
 					posX = e.pageX + 15;
 				}
 				tooltip.css( {
-					position: "absolute",
 					top: e.pageY - 15,
 					left: posX
 				});
 			},
 			// ロールアウト時
 			function() {
-				if ( _title ) {
-					// title属性復活
-					$(this).attr( 'title', title );
-				}
-				tooltip.hide().remove();
+				tooltip.fadeOut( 200, function() {
+					if ( _title ) {
+						// title属性復活
+						$(this).attr( 'title', title );
+					}
+					$(this).hide().remove();
+				} );
 			} );
 		});
 	};

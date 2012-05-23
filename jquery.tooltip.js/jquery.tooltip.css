@@ -21,4 +21,6 @@ div#jToolTip {
 	box-shadow : 1px 1px 3px #ccc;
 	-moz-box-shadow : 1px 1px 3px #ccc;
 	-webkit-box-shadow : 1px 1px 3px #ccc;
+	position : absolute;
+	z-index : 100;
 }
