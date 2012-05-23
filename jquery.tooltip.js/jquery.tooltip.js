@@ -1,7 +1,7 @@
 /**
 * jquery.toolTip.js
 * Description: ツールチップ（ポップアップヒント）を表示するjQueryプラグイン
-* Version: 1.1
+* Version: 1.1.1
 * Author: Takashi Kitajima
 * Autho URI: http://2inc.org
 * created: May 13, 2012
@@ -62,11 +62,11 @@
 			},
 			// ロールアウト時
 			function() {
+				if ( _title ) {
+					// title属性復活
+					$(this).attr( 'title', title );
+				}
 				tooltip.fadeOut( 200, function() {
-					if ( _title ) {
-						// title属性復活
-						$(this).attr( 'title', title );
-					}
 					$(this).hide().remove();
 				} );
 			} );
