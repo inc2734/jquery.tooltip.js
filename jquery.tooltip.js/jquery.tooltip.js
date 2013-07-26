@@ -1,11 +1,11 @@
 /**
 * jquery.toolTip.js
 * Description: ツールチップ（ポップアップヒント）を表示するjQueryプラグイン
-* Version: 1.1.1
+* Version: 1.2
 * Author: Takashi Kitajima
 * Autho URI: http://2inc.org
 * created: May 13, 2012
-* modified : May 23, 2012
+* modified : Jyly 26, 2013
 * License: GPL2
 *
 * Copyright 2012 Takashi Kitajima (email : inc@2inc.org)
@@ -34,43 +34,53 @@
 		var title = '';
 		return this.each( function( i, elem ) {
 			// ロールオーバー時
-			$(elem).hover( function( e ) {
-				if ( $(elem).find( '#jToolTip' ).size() > 0 ) return;
-				_title = $(elem).attr( 'title' );
+			$( elem ).hover( function( e ) {
+				if ( $( elem ).find( '#jToolTip' ).size() > 0 ) return;
+				_title = $( elem ).attr( 'title' );
 				if ( !_title ) {
 					title = $(this).find( '.jToolTip_a' ).html();
 				} else {
 					title = _title;
 					// title属性退避
-					$(this).attr( 'title', '' );
+					$( this ).attr( 'title', '' );
 				}
 				// ツールチップ生成
-				tooltip = $('<div/>')
+				tooltip = $( '<div/>' )
 					.attr( 'id', 'jToolTip' )
 					.html( title )
 					.appendTo( elem );
+
+				var elem_css_top  = $( elem ).position().top;
+				var elem_css_left = $( elem ).position().left;
+				var mouse_pageY = e.pageY;
+				var mouse_pageX = e.pageX;
+				var elem_pageY = $( elem ).offset().top;
+				var elem_pageX = $( elem ).offset().left;
+				var relativeY = mouse_pageY - elem_pageY;
+				var relativeX = mouse_pageX - elem_pageX;
+
 				// ブラウザにかぶるときは位置反転
-				if ( e.pageX + tooltip.width() > getWindowWidth() - 50 ) {
-					posX = e.pageX - tooltip.width() - 30;
+				if ( elem_css_left + relativeX + tooltip.width() > getWindowWidth() - 50 ) {
+					posX = elem_css_left + relativeX - tooltip.width() - 30;
 				} else {
-					posX = e.pageX + 15;
+					posX = elem_css_left + relativeX + 15;
 				}
 				tooltip.css( {
-					top: e.pageY - 15,
+					top: elem_css_top + relativeY - 15,
 					left: posX
-				});
+				} );
 			},
 			// ロールアウト時
 			function() {
 				if ( _title ) {
 					// title属性復活
-					$(this).attr( 'title', title );
+					$( this ).attr( 'title', title );
 				}
 				tooltip.fadeOut( 200, function() {
-					$(this).hide().remove();
+					$( this ).hide().remove();
 				} );
 			} );
-		});
+		} );
 	};
 
 	function getWindowWidth() {
@@ -82,7 +92,7 @@
 			return document.body.clientWidth;
 		}
 	}
-})( jQuery );
-jQuery(function( $ ) {
-	$('.jToolTip_q').toolTip();
+} )( jQuery );
+jQuery( function( $ ) {
+	$( '.jToolTip_q' ).toolTip();
 } );
